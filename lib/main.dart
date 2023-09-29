@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -35,20 +35,27 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   bool rememberUser = false;
+  int? screenHeight;
+  int? screenWidth;
 
   @override
   Widget build(BuildContext context) {
     mediaSize = MediaQuery.of(context).size;
+    debugPrint("${mediaSize!.height % 1000}");
+    debugPrint("${mediaSize!.width % 165}");
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xfffe813f),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            Positioned(top: 50, left: 25, child: _buildTop()),
-            Positioned(bottom: 0, child: _buildBottom()),
+            Positioned(
+                top: mediaSize!.height % 75,
+                left: mediaSize!.width % 165,
+                child: _buildTop()),
+            Positioned(bottom: mediaSize!.height % 25, child: _buildBottom()),
           ],
         ),
       ),
@@ -72,15 +79,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildBottom() {
     return SizedBox(
       width: mediaSize?.width,
-      child: Expanded(
-        child: Card(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: _buildForm(),
-          ),
+      child: Card(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: _buildForm(),
         ),
       ),
     );
@@ -101,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
@@ -109,28 +114,30 @@ class _MyHomePageState extends State<MyHomePage> {
               style: GoogleFonts.robotoFlex(
                   color: Colors.grey, fontWeight: FontWeight.w300),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             _buildInputField(emailController),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             _buildInputField(passController, isPassword: true),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             _buildRememberForgot(),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Align(alignment: Alignment.center, child: _buildLoginButton()),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
           ],
         ),
-        SizedBox(height: 40,),
+        const SizedBox(
+          height: 40,
+        ),
         _buildOtherLogin(),
       ],
     );
@@ -149,13 +156,15 @@ class _MyHomePageState extends State<MyHomePage> {
             fontSize: 13,
             fontWeight: FontWeight.w500,
             color: Colors.grey.shade500),
-        suffixIcon: isPassword ? Icon(Icons.remove_red_eye) : Icon(Icons.done),
+        suffixIcon: isPassword
+            ? const Icon(Icons.remove_red_eye)
+            : const Icon(Icons.done),
         suffixIconColor: Colors.black,
         filled: true,
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.all(Radius.circular(15))),
-        contentPadding: EdgeInsets.all(15),
+        contentPadding: const EdgeInsets.all(15),
         fillColor: Colors.grey.shade200,
       ),
     );
@@ -170,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Transform.scale(
               scale: 1.3,
               child: CupertinoCheckbox(
-                  activeColor: Color(0xfffe813f),
+                  activeColor: const Color(0xfffe813f),
                   value: rememberUser,
                   onChanged: (value) {
                     setState(() {
@@ -178,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   }),
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             Text(
@@ -191,7 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () {},
           child: Text("Forgot Password?",
               style: GoogleFonts.robotoFlex(
-                  color: Color(0xfffe813f),
+                  color: const Color(0xfffe813f),
                   fontWeight: FontWeight.w700,
                   fontSize: 13)),
         ),
@@ -202,21 +211,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildLoginButton() {
     return ElevatedButton(
       onPressed: () {},
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size.fromHeight(50),
+        backgroundColor: const Color(0xfffe813f),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+      ),
       child: Text("Log In",
           style: GoogleFonts.roboto(
             color: Colors.white,
             fontWeight: FontWeight.w700,
             fontSize: 20,
           )),
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size.fromHeight(50),
-        backgroundColor: Color(0xfffe813f),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
-      ),
     );
   }
 
@@ -228,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Expanded(
               child: Container(
-                child: Divider(
+                child: const Divider(
                   color: Colors.grey,
                   thickness: 0.50,
                   height: 50,
@@ -243,7 +252,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontWeight: FontWeight.w500)),
             Expanded(
               child: Container(
-                child: Divider(
+                child: const Divider(
                   color: Colors.grey,
                   thickness: 0.50,
                   height: 50,
@@ -254,7 +263,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         MaterialButton(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
               side: BorderSide(color: Colors.grey, width: 0.3),
               borderRadius: BorderRadius.all(Radius.circular(10))),
           onPressed: () {},
@@ -264,16 +273,16 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 40.0,
-                  width: 40.0,
-                  decoration: BoxDecoration(
+                  height: 30.0,
+                  width: 30.0,
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/icons/wp_icon.png'),
+                        image: AssetImage('assets/icons/wp_icon_png.png'),
                         fit: BoxFit.cover),
                     shape: BoxShape.circle,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Text(
@@ -284,11 +293,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         MaterialButton(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
               side: BorderSide(color: Colors.grey, width: 0.3),
               borderRadius: BorderRadius.all(Radius.circular(10))),
           onPressed: () {},
@@ -300,14 +309,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Container(
                   height: 30.0,
                   width: 30.0,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('assets/icons/google_icon.png'),
                         fit: BoxFit.cover),
                     shape: BoxShape.circle,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Text(
