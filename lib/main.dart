@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,119 +9,321 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  Size? mediaSize;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  bool rememberUser = false;
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    mediaSize = MediaQuery.of(context).size;
+    return Container(
+      decoration: BoxDecoration(
+        color: Color(0xfffe813f),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: [
+            Positioned(top: 50, left: 25, child: _buildTop()),
+            Positioned(bottom: 0, child: _buildBottom()),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  Widget _buildTop() {
+    return SizedBox(
+      width: mediaSize?.width,
+      child: Text(
+        "Log In",
+        style: GoogleFonts.roboto(
+          color: Colors.white,
+          fontWeight: FontWeight.w700,
+          fontSize: 35,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottom() {
+    return SizedBox(
+      width: mediaSize?.width,
+      child: Expanded(
+        child: Card(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: _buildForm(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildForm() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Welcome",
+              style: GoogleFonts.robotoCondensed(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              "To keep connected with us please login with your personal info",
+              style: GoogleFonts.robotoFlex(
+                  color: Colors.grey, fontWeight: FontWeight.w300),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            _buildInputField(emailController),
+            SizedBox(
+              height: 15,
+            ),
+            _buildInputField(passController, isPassword: true),
+            SizedBox(
+              height: 25,
+            ),
+            _buildRememberForgot(),
+            SizedBox(
+              height: 25,
+            ),
+            Align(alignment: Alignment.center, child: _buildLoginButton()),
+            SizedBox(
+              height: 25,
+            ),
+          ],
+        ),
+        SizedBox(height: 40,),
+        _buildOtherLogin(),
+      ],
+    );
+  }
+
+  Widget _buildInputField(TextEditingController controller,
+      {isPassword = false}) {
+    return TextField(
+      controller: controller,
+      obscureText: isPassword,
+      decoration: InputDecoration(
+        labelText: isPassword ? "Password" : "Email Address",
+        isDense: true,
+        isCollapsed: true,
+        labelStyle: GoogleFonts.robotoFlex(
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            color: Colors.grey.shade500),
+        suffixIcon: isPassword ? Icon(Icons.remove_red_eye) : Icon(Icons.done),
+        suffixIconColor: Colors.black,
+        filled: true,
+        border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        contentPadding: EdgeInsets.all(15),
+        fillColor: Colors.grey.shade200,
+      ),
+    );
+  }
+
+  Widget _buildRememberForgot() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Transform.scale(
+              scale: 1.3,
+              child: CupertinoCheckbox(
+                  activeColor: Color(0xfffe813f),
+                  value: rememberUser,
+                  onChanged: (value) {
+                    setState(() {
+                      rememberUser = value!;
+                    });
+                  }),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              "Remember me?",
+              style: GoogleFonts.robotoFlex(fontSize: 13),
+            ),
+          ],
+        ),
+        TextButton(
+          onPressed: () {},
+          child: Text("Forgot Password?",
+              style: GoogleFonts.robotoFlex(
+                  color: Color(0xfffe813f),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13)),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text("Log In",
+          style: GoogleFonts.roboto(
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
+          )),
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size.fromHeight(50),
+        backgroundColor: Color(0xfffe813f),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOtherLogin() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                child: Divider(
+                  color: Colors.grey,
+                  thickness: 0.50,
+                  height: 50,
+                  endIndent: 5,
+                ),
+              ),
+            ),
+            Text("OR CONTINUE WITH",
+                style: GoogleFonts.robotoFlex(
+                    fontSize: 10,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w500)),
+            Expanded(
+              child: Container(
+                child: Divider(
+                  color: Colors.grey,
+                  thickness: 0.50,
+                  height: 50,
+                  indent: 5,
+                ),
+              ),
+            ),
+          ],
+        ),
+        MaterialButton(
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.grey, width: 0.3),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          onPressed: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 40.0,
+                  width: 40.0,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/icons/wp_icon.png'),
+                        fit: BoxFit.cover),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  "Login with WhatsApp",
+                  style: GoogleFonts.robotoFlex(),
+                )
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        MaterialButton(
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.grey, width: 0.3),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          onPressed: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 30.0,
+                  width: 30.0,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/icons/google_icon.png'),
+                        fit: BoxFit.cover),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  "Login with Google",
+                  style: GoogleFonts.robotoFlex(),
+                )
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 }
