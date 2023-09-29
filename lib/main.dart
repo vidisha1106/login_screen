@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -11,14 +12,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ScreenUtilInit(
+      builder: (context, child) => MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const MyHomePage(),
       ),
-      home: const MyHomePage(),
+      designSize: Size(1600,720),
     );
   }
 }
@@ -35,14 +39,11 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   bool rememberUser = false;
-  int? screenHeight;
-  int? screenWidth;
 
   @override
   Widget build(BuildContext context) {
     mediaSize = MediaQuery.of(context).size;
-    debugPrint("${mediaSize!.height % 1000}");
-    debugPrint("${mediaSize!.width % 165}");
+    debugPrint("${mediaSize?.width}");
     return Container(
       decoration: const BoxDecoration(
         color: Color(0xfffe813f),
@@ -51,11 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            Positioned(
-                top: mediaSize!.height % 75,
-                left: mediaSize!.width % 165,
-                child: _buildTop()),
-            Positioned(bottom: mediaSize!.height % 25, child: _buildBottom()),
+            Positioned(top: 50.h, left: 25.h, child: _buildTop()),
+            Positioned(bottom: 0.h, child: _buildBottom()),
           ],
         ),
       ),
@@ -70,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         style: GoogleFonts.roboto(
           color: Colors.white,
           fontWeight: FontWeight.w700,
-          fontSize: 35,
+          fontSize: 110.sp,
         ),
       ),
     );
@@ -80,11 +78,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return SizedBox(
       width: mediaSize?.width,
       child: Card(
-        shape: const RoundedRectangleBorder(
+        shape:  RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+                topLeft: Radius.circular(30.r), topRight: Radius.circular(30.r))),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.symmetric(horizontal: 50.w,vertical: 20.h),
           child: _buildForm(),
         ),
       ),
@@ -101,42 +99,42 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               "Welcome",
               style: GoogleFonts.robotoCondensed(
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
               ),
             ),
-            const SizedBox(
-              height: 5,
+             SizedBox(
+              height: 5.h,
             ),
             Text(
               "To keep connected with us please login with your personal info",
               style: GoogleFonts.robotoFlex(
                   color: Colors.grey, fontWeight: FontWeight.w300),
             ),
-            const SizedBox(
-              height: 25,
+             SizedBox(
+              height: 25.h,
             ),
             _buildInputField(emailController),
-            const SizedBox(
-              height: 15,
+             SizedBox(
+              height: 15.h,
             ),
             _buildInputField(passController, isPassword: true),
-            const SizedBox(
-              height: 25,
+             SizedBox(
+              height: 25.h,
             ),
             _buildRememberForgot(),
-            const SizedBox(
-              height: 25,
+             SizedBox(
+              height: 25.h,
             ),
             Align(alignment: Alignment.center, child: _buildLoginButton()),
-            const SizedBox(
-              height: 25,
+             SizedBox(
+              height: 25.h,
             ),
           ],
         ),
-        const SizedBox(
-          height: 40,
+         SizedBox(
+          height: 50.h,
         ),
         _buildOtherLogin(),
       ],
@@ -153,18 +151,16 @@ class _MyHomePageState extends State<MyHomePage> {
         isDense: true,
         isCollapsed: true,
         labelStyle: GoogleFonts.robotoFlex(
-            fontSize: 13,
+            fontSize: 13.sp,
             fontWeight: FontWeight.w500,
             color: Colors.grey.shade500),
-        suffixIcon: isPassword
-            ? const Icon(Icons.remove_red_eye)
-            : const Icon(Icons.done),
+        suffixIcon: isPassword ? const Icon(Icons.remove_red_eye) : const Icon(Icons.done),
         suffixIconColor: Colors.black,
         filled: true,
-        border: const OutlineInputBorder(
+        border:  OutlineInputBorder(
             borderSide: BorderSide.none,
-            borderRadius: BorderRadius.all(Radius.circular(15))),
-        contentPadding: const EdgeInsets.all(15),
+            borderRadius: BorderRadius.all(Radius.circular(15.r))),
+        contentPadding:  EdgeInsets.symmetric(horizontal: 15.h,vertical: 15.w),
         fillColor: Colors.grey.shade200,
       ),
     );
@@ -187,12 +183,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   }),
             ),
-            const SizedBox(
-              width: 5,
+             SizedBox(
+              width: 5.w,
             ),
             Text(
               "Remember me?",
-              style: GoogleFonts.robotoFlex(fontSize: 13),
+              style: GoogleFonts.robotoFlex(fontSize: 13.sp),
             ),
           ],
         ),
@@ -202,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: GoogleFonts.robotoFlex(
                   color: const Color(0xfffe813f),
                   fontWeight: FontWeight.w700,
-                  fontSize: 13)),
+                  fontSize: 13.sp)),
         ),
       ],
     );
@@ -212,11 +208,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(50),
+        minimumSize:  Size.fromHeight(50.h),
         backgroundColor: const Color(0xfffe813f),
-        shape: const RoundedRectangleBorder(
+        shape:  RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(10),
+            Radius.circular(10.r),
           ),
         ),
       ),
@@ -224,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
           style: GoogleFonts.roboto(
             color: Colors.white,
             fontWeight: FontWeight.w700,
-            fontSize: 20,
+            fontSize: 20.sp,
           )),
     );
   }
@@ -235,55 +231,51 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         Row(
           children: [
-            Expanded(
-              child: Container(
-                child: const Divider(
-                  color: Colors.grey,
-                  thickness: 0.50,
-                  height: 50,
-                  endIndent: 5,
-                ),
+             Expanded(
+              child: Divider(
+                color: Colors.grey,
+                thickness: 0.50,
+                height: 50.h,
+                endIndent: 5,
               ),
             ),
             Text("OR CONTINUE WITH",
                 style: GoogleFonts.robotoFlex(
-                    fontSize: 10,
+                    fontSize: 10.sp,
                     color: Colors.grey,
                     fontWeight: FontWeight.w500)),
-            Expanded(
-              child: Container(
-                child: const Divider(
-                  color: Colors.grey,
-                  thickness: 0.50,
-                  height: 50,
-                  indent: 5,
-                ),
+             Expanded(
+              child: Divider(
+                color: Colors.grey,
+                thickness: 0.50,
+                height: 50.h,
+                indent: 5,
               ),
             ),
           ],
         ),
         MaterialButton(
-          shape: const RoundedRectangleBorder(
-              side: BorderSide(color: Colors.grey, width: 0.3),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
+          shape:  RoundedRectangleBorder(
+              side: BorderSide(color: Colors.grey, width: 0.3.w),
+              borderRadius: BorderRadius.all(Radius.circular(10.r))),
           onPressed: () {},
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:  EdgeInsets.symmetric(vertical: 5.h,horizontal: 5.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 30.0,
-                  width: 30.0,
+                  height: 40.0.h,
+                  width: 40.0.h,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/icons/wp_icon_png.png'),
+                        image: AssetImage('assets/icons/wp_icon.png'),
                         fit: BoxFit.cover),
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
+                 SizedBox(
+                  width: 20.w,
                 ),
                 Text(
                   "Login with WhatsApp",
@@ -293,22 +285,22 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
+         SizedBox(
+          height: 10.h,
         ),
         MaterialButton(
-          shape: const RoundedRectangleBorder(
-              side: BorderSide(color: Colors.grey, width: 0.3),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
+          shape:  RoundedRectangleBorder(
+              side: BorderSide(color: Colors.grey, width: 0.3.w),
+              borderRadius: BorderRadius.all(Radius.circular(10.r))),
           onPressed: () {},
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:  EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 30.0,
-                  width: 30.0,
+                  height: 30.0.h,
+                  width: 30.0.w,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('assets/icons/google_icon.png'),
@@ -316,8 +308,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
+                 SizedBox(
+                  width: 20.w,
                 ),
                 Text(
                   "Login with Google",
