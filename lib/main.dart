@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Color(0xfffe813f),
       ),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
@@ -147,6 +148,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return TextField(
       controller: controller,
       obscureText: isPassword,
+      onTapOutside: (event) {
+        FocusScope.of(context).unfocus();
+      },
       decoration: InputDecoration(
         labelText: isPassword ? "Password" : "Email Address",
         isDense: true,
