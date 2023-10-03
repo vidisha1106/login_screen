@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         ),
         home: const MyHomePage(),
       ),
-      designSize: Size(1600,720),
+      designSize: Size(1600, 720),
     );
   }
 }
@@ -53,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Stack(
           children: [
             Positioned(top: 50.h, left: 25.h, child: _buildTop()),
-            Positioned(bottom: 0.h, child: _buildBottom()),
+            Positioned(bottom: 0.h, child: _buildBottom(), top: 125.h),
           ],
         ),
       ),
@@ -68,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
         style: GoogleFonts.roboto(
           color: Colors.white,
           fontWeight: FontWeight.w700,
-          fontSize: 110.sp,
+          fontSize: 125.sp,
         ),
       ),
     );
@@ -78,11 +79,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return SizedBox(
       width: mediaSize?.width,
       child: Card(
-        shape:  RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.r), topRight: Radius.circular(30.r))),
+                topLeft: Radius.circular(100.r),
+                topRight: Radius.circular(100.r))),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50.w,vertical: 20.h),
+          padding: EdgeInsets.symmetric(horizontal: 100.w, vertical: 20.h),
           child: _buildForm(),
         ),
       ),
@@ -99,41 +101,40 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               "Welcome",
               style: GoogleFonts.robotoCondensed(
-                fontSize: 20.sp,
+                fontSize: 100.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
               ),
             ),
-             SizedBox(
-              height: 5.h,
-            ),
             Text(
               "To keep connected with us please login with your personal info",
               style: GoogleFonts.robotoFlex(
-                  color: Colors.grey, fontWeight: FontWeight.w300),
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w300,
+                  fontSize: 12.5),
             ),
-             SizedBox(
+            SizedBox(
               height: 25.h,
             ),
             _buildInputField(emailController),
-             SizedBox(
+            SizedBox(
               height: 15.h,
             ),
             _buildInputField(passController, isPassword: true),
-             SizedBox(
-              height: 25.h,
+            SizedBox(
+              height: 5.h,
             ),
             _buildRememberForgot(),
-             SizedBox(
+            SizedBox(
               height: 25.h,
             ),
             Align(alignment: Alignment.center, child: _buildLoginButton()),
-             SizedBox(
+            SizedBox(
               height: 25.h,
             ),
           ],
         ),
-         SizedBox(
+        SizedBox(
           height: 50.h,
         ),
         _buildOtherLogin(),
@@ -151,16 +152,18 @@ class _MyHomePageState extends State<MyHomePage> {
         isDense: true,
         isCollapsed: true,
         labelStyle: GoogleFonts.robotoFlex(
-            fontSize: 13.sp,
+            fontSize: 50.sp,
             fontWeight: FontWeight.w500,
             color: Colors.grey.shade500),
-        suffixIcon: isPassword ? const Icon(Icons.remove_red_eye) : const Icon(Icons.done),
+        suffixIcon: isPassword
+            ? const Icon(Icons.remove_red_eye)
+            : const Icon(Icons.done),
         suffixIconColor: Colors.black,
         filled: true,
-        border:  OutlineInputBorder(
+        border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.all(Radius.circular(15.r))),
-        contentPadding:  EdgeInsets.symmetric(horizontal: 15.h,vertical: 15.w),
+        contentPadding: EdgeInsets.symmetric(horizontal: 25.h, vertical: 50.w),
         fillColor: Colors.grey.shade200,
       ),
     );
@@ -183,12 +186,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   }),
             ),
-             SizedBox(
+            SizedBox(
               width: 5.w,
             ),
             Text(
               "Remember me?",
-              style: GoogleFonts.robotoFlex(fontSize: 13.sp),
+              style: GoogleFonts.robotoFlex(fontSize: 50.sp),
             ),
           ],
         ),
@@ -198,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: GoogleFonts.robotoFlex(
                   color: const Color(0xfffe813f),
                   fontWeight: FontWeight.w700,
-                  fontSize: 13.sp)),
+                  fontSize: 50.sp)),
         ),
       ],
     );
@@ -208,11 +211,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-        minimumSize:  Size.fromHeight(50.h),
+        minimumSize: Size.fromHeight(50.h),
         backgroundColor: const Color(0xfffe813f),
-        shape:  RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(10.r),
+            Radius.circular(50.r),
           ),
         ),
       ),
@@ -220,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
           style: GoogleFonts.roboto(
             color: Colors.white,
             fontWeight: FontWeight.w700,
-            fontSize: 20.sp,
+            fontSize: 75.sp,
           )),
     );
   }
@@ -231,89 +234,85 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         Row(
           children: [
-             Expanded(
+            Expanded(
               child: Divider(
                 color: Colors.grey,
-                thickness: 0.50,
+                thickness: 0.3.h,
                 height: 50.h,
-                endIndent: 5,
+                endIndent: 25.w,
               ),
             ),
             Text("OR CONTINUE WITH",
                 style: GoogleFonts.robotoFlex(
-                    fontSize: 10.sp,
+                    fontSize: 25.sp,
                     color: Colors.grey,
                     fontWeight: FontWeight.w500)),
-             Expanded(
+            Expanded(
               child: Divider(
                 color: Colors.grey,
-                thickness: 0.50,
+                thickness: 0.3.h,
                 height: 50.h,
-                indent: 5,
+                indent: 25.w,
               ),
             ),
           ],
         ),
         MaterialButton(
-          shape:  RoundedRectangleBorder(
-              side: BorderSide(color: Colors.grey, width: 0.3.w),
-              borderRadius: BorderRadius.all(Radius.circular(10.r))),
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.grey, width: 0.5.w),
+              borderRadius: BorderRadius.all(Radius.circular(50.r))),
           onPressed: () {},
           child: Padding(
-            padding:  EdgeInsets.symmetric(vertical: 5.h,horizontal: 5.w),
+            padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 40.0.h,
-                  width: 40.0.h,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/icons/wp_icon.png'),
-                        fit: BoxFit.cover),
-                    shape: BoxShape.circle,
-                  ),
+                SizedBox(
+                  height: 25.0.h,
+                  width: 25.0.h,
+                  child: SvgPicture.asset("assets/icons/wp_icon.svg"),
                 ),
-                 SizedBox(
-                  width: 20.w,
+                SizedBox(
+                  width: 25.w,
                 ),
                 Text(
                   "Login with WhatsApp",
-                  style: GoogleFonts.robotoFlex(),
+                  style: GoogleFonts.robotoFlex(
+                      fontSize: 50.sp,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500),
                 )
               ],
             ),
           ),
         ),
-         SizedBox(
-          height: 10.h,
+        SizedBox(
+          height: 3.h,
         ),
         MaterialButton(
-          shape:  RoundedRectangleBorder(
-              side: BorderSide(color: Colors.grey, width: 0.3.w),
-              borderRadius: BorderRadius.all(Radius.circular(10.r))),
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.grey, width: 0.5.w),
+              borderRadius: BorderRadius.all(Radius.circular(50.r))),
           onPressed: () {},
           child: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 30.0.h,
-                  width: 30.0.w,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/icons/google_icon.png'),
-                        fit: BoxFit.cover),
-                    shape: BoxShape.circle,
-                  ),
+                SizedBox(
+                  height: 25.0.h,
+                  width: 25.0.h,
+                  child: SvgPicture.asset("assets/icons/google_icon.svg"),
                 ),
-                 SizedBox(
-                  width: 20.w,
+                SizedBox(
+                  width: 25.w,
                 ),
                 Text(
                   "Login with Google",
-                  style: GoogleFonts.robotoFlex(),
+                  style: GoogleFonts.robotoFlex(
+                      fontSize: 50.sp,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500),
                 )
               ],
             ),
@@ -321,10 +320,5 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ],
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 }
